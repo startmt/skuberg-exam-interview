@@ -12,7 +12,6 @@ import { useForm } from "react-hook-form";
 import { useStores } from "../../stores";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { observer } from "mobx-react-lite";
-import { TodoListItemForm } from "../../pages/TodoPage";
 type TodoListItemProps = {
   todo: todoProp;
 };

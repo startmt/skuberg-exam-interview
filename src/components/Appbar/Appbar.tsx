@@ -1,29 +1,25 @@
-import React, { Fragment, useEffect } from "react";
+import React from "react";
 import { observer } from "mobx-react-lite";
 import {
-  Container,
   makeStyles,
   Theme,
   createStyles,
-  Box,
-  fade,
   Typography,
+  AppBar,
+  Toolbar,
+  IconButton,
+  fade,
+  Badge,
+  Link,
 } from "@material-ui/core";
-import { MovieList } from "../components/MovieList";
-import { useStores } from "../stores";
-import { Appbar } from "../components/Appbar";
+import MenuIcon from "@material-ui/icons/Menu";
+import { SearchBar } from "../SearchBar";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import { useStores } from "../../stores";
+import { useHistory } from "react-router";
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      padding: "2px 4px",
-      alignItems: "center",
-      width: 600,
-    },
-    center: {
-      display: "flex",
-      alignItems: "center",
-      flexDirection: "column",
-    },
     menuButton: {
       marginRight: theme.spacing(2),
     },
@@ -58,7 +54,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
       paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
       transition: theme.transitions.create("width"),
       width: "100%",
@@ -71,28 +66,39 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-const MoviePage = () => {
+const Appbar = () => {
   const classes = useStyles({});
-  const { movieStore } = useStores();
-
-  useEffect(() => {
-    movieStore.fetch();
-  }, [movieStore]);
-
-  const movie = movieStore.movie.val() || [];
+  const { cartStore } = useStores();
+  const { push } = useHistory();
+  const handleRouteCart = () => {
+    push("/movie/cart");
+  };
   return (
-    <Fragment>
-      <Appbar />
-      <Container className={classes.center}>
-        <Box pt={3}>
-          <Box pb={3}>
-            <Typography variant="h4">Popular Movies</Typography>
-          </Box>
-          <MovieList movies={movie} />
-        </Box>
-      </Container>
-    </Fragment>
+    <AppBar position="static">
+      <Toolbar>
+        <IconButton
+          edge="start"
+          className={classes.menuButton}
+          color="inherit"
+          aria-label="menu"
+        >
+          <MenuIcon />
+        </IconButton>
+
+        <Typography variant="h6" className={classes.title}>
+          <Link color="inherit" href="/movie">
+            MoviePage
+          </Link>
+        </Typography>
+        <IconButton color="inherit" onClick={handleRouteCart}>
+          <Badge color="secondary" badgeContent={cartStore.cart.val()?.length}>
+            <ShoppingCartIcon />
+          </Badge>
+        </IconButton>
+        <SearchBar />
+      </Toolbar>
+    </AppBar>
   );
 };
 
-export default observer(MoviePage);
+export default observer(Appbar);

@@ -11,3 +11,13 @@ export const useTodo = () => {
   const { todoStore } = useStores();
   return todoStore;
 };
+
+export const useMovie = () => {
+  const { movieStore } = useStores();
+  return movieStore;
+};
+
+export const useCart = () => {
+  const { cartStore } = useStores();
+  return cartStore;
+};
