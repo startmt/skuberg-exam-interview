@@ -1,32 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
-  Card,
-  CardActionArea,
-  CardMedia,
-  CardContent,
   Typography,
-  CardActions,
-  Button,
   makeStyles,
   Theme,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Divider,
+  Button,
   Grid,
+  Paper,
 } from "@material-ui/core";
 import { useStores } from "../../stores";
+import { MovieType } from "../../types/MovieType";
 type MovieListItemProps = {
-  movie: any;
+  movie: MovieType;
 };
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     [theme.breakpoints.up("xs")]: {
       maxWidth: "100%",
     },
-    [theme.breakpoints.up("sm")]: {
-      maxWidth: 240,
-    },
-    [theme.breakpoints.up("md")]: {
-      maxWidth: 300,
-    },
-    maxWidth: 345,
   },
   overview: {
     display: "-webkit-inline-box",
@@ -43,52 +37,60 @@ const useStyles = makeStyles((theme: Theme) => ({
   price: {
     marginRight: theme.spacing(2),
   },
+  image: {
+    [theme.breakpoints.down("sm")]: {
+      width: 150,
+    },
+    marginRight: theme.spacing(2),
+    width: 200,
+    borderRadius: "unset",
+  },
+  space: {
+    marginBottom: theme.spacing(3),
+  },
 }));
 
 const MovieListItem: React.FC<MovieListItemProps> = ({ movie }) => {
   const classes = useStyles();
   const { cartStore } = useStores();
+  const [added, setAdded] = useState(false);
+  useEffect(() => {
+    setAdded(cartStore.checkaddedMovie(movie));
+  }, [cartStore, movie]);
   const handleAddTocart = async () => {
     await cartStore.addMovie(movie);
+    setAdded(cartStore.checkaddedMovie(movie));
   };
   return (
-    <Card className={classes.root}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          alt="Contemplative Reptile"
-          height="140"
-          image={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
-          title={movie.original_title}
+    <Paper className={classes.space} elevation={0}>
+      <ListItem onClick={handleAddTocart} button alignItems="flex-start">
+        <ListItemAvatar className={classes.image}>
+          <img
+            className={classes.image}
+            alt="Remy Sharp"
+            src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
+          />
+        </ListItemAvatar>
+        <ListItemText
+          primary={movie.original_title}
+          secondary={
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              className={classes.overview}
+            >
+              {movie.overview}
+            </Typography>
+          }
         />
-        <CardContent>
-          <Typography
-            className={classes.title}
-            gutterBottom
-            variant="h5"
-            component="h2"
-          >
-            {movie.original_title}
-          </Typography>
-          <Typography
-            className={classes.overview}
-            variant="body2"
-            color="textSecondary"
-            component="p"
-          >
-            {movie.overview}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Grid container justify="flex-end" alignItems="center">
-          <Typography className={classes.price}>{movie.price} Baht</Typography>
-          <Button size="small" color="primary" onClick={handleAddTocart}>
-            Add cart
-          </Button>
-        </Grid>
-      </CardActions>
-    </Card>
+      </ListItem>
+      <Grid container justify="flex-end">
+        <Button disabled={added} color="secondary" onClick={handleAddTocart}>
+          ADD TO CART
+        </Button>
+      </Grid>
+      <Divider />
+    </Paper>
   );
 };
 

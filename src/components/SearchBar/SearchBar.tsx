@@ -6,10 +6,10 @@ import {
   createStyles,
   fade,
   InputBase,
+  Paper,
 } from "@material-ui/core";
 import { useStores } from "../../stores";
 import SearchIcon from "@material-ui/icons/Search";
-import ResultSearch from "./ResultSearch";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     search: {
@@ -40,48 +40,30 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
       paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
       transition: theme.transitions.create("width"),
       width: "100%",
-      [theme.breakpoints.up("sm")]: {
-        width: "12ch",
-        "&:focus": {
-          width: "20ch",
-        },
-      },
     },
   })
 );
 const Appbar = () => {
   const classes = useStyles({});
   const { movieStore } = useStores();
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
-    null
-  );
   const [search, setSearch] = useState("");
-  const [open, setOpen] = useState(false);
   const handleSearch = async (e: any) => {
-    console.log(e.target.value);
     setSearch(e.target.value);
-    setAnchorEl(anchorEl ? null : e.currentTarget);
     await movieStore.setSearch(e.target.value);
   };
   return (
-    <Fragment>
+    <Paper>
       <div className={classes.search}>
         <div className={classes.searchIcon}>
           <SearchIcon />
         </div>
         <InputBase
+          fullWidth
           id="search-movie-input"
           onChange={handleSearch}
-          onBlur={() => {
-            setOpen(false);
-          }}
-          onFocus={() => {
-            setOpen(true);
-          }}
           placeholder="Search…"
           value={search}
           classes={{
@@ -91,12 +73,7 @@ const Appbar = () => {
           inputProps={{ "aria-label": "search" }}
         />
       </div>
-      <ResultSearch
-        isSearch={search !== "" && open}
-        anchorEl={anchorEl}
-        data={movieStore.search.val() || []}
-      />
-    </Fragment>
+    </Paper>
   );
 };
 

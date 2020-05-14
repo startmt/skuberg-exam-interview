@@ -1,5 +1,5 @@
-import { TextField as MuiTextField } from "@material-ui/core";
-import { TextFieldProps as MuiTextFieldProps } from "@material-ui/core/";
+import { InputBase as MuiTextField } from "@material-ui/core";
+import { InputBaseProps as MuiTextFieldProps } from "@material-ui/core/";
 import React from "react";
 import { RHFInput } from "react-hook-form-input";
 

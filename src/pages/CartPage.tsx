@@ -1,4 +1,5 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
+import NumberFormat from "react-number-format";
 import { observer } from "mobx-react-lite";
 import {
   Container,
@@ -6,15 +7,14 @@ import {
   Theme,
   createStyles,
   Box,
-  fade,
   Typography,
   Button,
   Grid,
 } from "@material-ui/core";
-import { MovieList } from "../components/MovieList";
 import { useStores } from "../stores";
 import { Appbar } from "../components/Appbar";
 import { CartTable } from "../components/CartTable";
+import PurchaseModal from "../components/PuchaseModal/PuchaseModal";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     center: {
@@ -43,13 +43,20 @@ const CartPage = () => {
           <CartTable carts={carts} />
           <Box pt={3}>
             <Grid container justify="flex-end">
-              <Typography
-                variant="h4"
-                align="center"
-              >{`Total ${cartStore.calculatePrice}`}</Typography>
-              <Button variant="contained" color="primary">
-                Purchase
-              </Button>
+              <Typography variant="h4" align="center">
+                <NumberFormat
+                  displayType={"text"}
+                  decimalScale={2}
+                  prefix="Total "
+                  suffix=" Baht"
+                  fixedDecimalScale={true}
+                  thousandSeparator
+                  value={cartStore.calculatePrice}
+                />
+              </Typography>
+              <Box ml={2}>
+                <PurchaseModal />
+              </Box>
             </Grid>
           </Box>
         </Box>

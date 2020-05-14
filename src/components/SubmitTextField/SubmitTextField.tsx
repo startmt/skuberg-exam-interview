@@ -8,7 +8,7 @@ import {
   createStyles,
 } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
-import { TextField } from "../Form";
+import { InputBase } from "../Form";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,7 +42,7 @@ const SubmitTextField: React.FC<SubmitTextFieldProps> = ({
   const classes = useStyles();
   return (
     <Paper className={classes.root}>
-      <TextField
+      <InputBase
         className={classes.input}
         name="todo"
         placeholder="please enter todo list"

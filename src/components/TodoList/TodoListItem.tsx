@@ -7,7 +7,7 @@ import {
   IconButton,
 } from "@material-ui/core";
 import { todoProp } from "../../stores/TodoStore";
-import Form, { TextField } from "../Form";
+import Form, { InputBase } from "../Form";
 import { useForm } from "react-hook-form";
 import { useStores } from "../../stores";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -53,7 +53,7 @@ const TodoListItem: React.FC<TodoListItemProps> = ({ todo }) => {
     >
       {edit && !todo.complete ? (
         <Form form={form} onSubmit={updateTodo} id="item-todo-form">
-          <TextField name="todo" defaultValue={todo.todo} fullWidth autoFocus />
+          <InputBase name="todo" defaultValue={todo.todo} fullWidth autoFocus />
         </Form>
       ) : (
         <ListItemText primary={todo.todo} />

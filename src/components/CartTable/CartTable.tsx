@@ -10,6 +10,7 @@ import Paper from "@material-ui/core/Paper";
 import { Button, Grid } from "@material-ui/core";
 import { useStores } from "../../stores";
 import { observer } from "mobx-react-lite";
+import CartTableItem from "./CartTableItem";
 
 const useStyles = makeStyles({
   table: {
@@ -46,21 +47,12 @@ const TableCart: React.FC<TableCartProps> = ({ carts }) => {
               <TableCell align="left">Name</TableCell>
               <TableCell align="left">Price</TableCell>
               <TableCell align="left">Rate</TableCell>
+              <TableCell align="left">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {carts.map((row: any) => (
-              <TableRow key={row.title}>
-                <TableCell>
-                  <img
-                    src={`https://image.tmdb.org/t/p/w200${row.backdrop_path}`}
-                    alt={row.title}
-                  />
-                </TableCell>
-                <TableCell align="left">{row.title}</TableCell>
-                <TableCell align="left">{row.price}</TableCell>
-                <TableCell align="left">{row.vote_average}</TableCell>
-              </TableRow>
+              <CartTableItem cart={row} />
             ))}
           </TableBody>
         </Table>

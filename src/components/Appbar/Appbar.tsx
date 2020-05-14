@@ -13,7 +13,6 @@ import {
   Link,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import { SearchBar } from "../SearchBar";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { useStores } from "../../stores";
 import { useHistory } from "react-router";
@@ -95,7 +94,6 @@ const Appbar = () => {
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
-        <SearchBar />
       </Toolbar>
     </AppBar>
   );
