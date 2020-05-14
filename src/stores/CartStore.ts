@@ -30,17 +30,15 @@ export class CartStore {
       ? true
       : false;
   }
-  // @action
-  // async removeMovie(index: number) {
-  //   // this.todo.setLoading(true);
-  //   // const data = this.todo
-  //   //   .val()
-  //   //   ?.filter((data) => data.index !== index);
-  //   runInAction("removeMovie", () => {
-  //     // this.todo.set(data);
-  //     // localStorage.setItem("cart", JSON.stringify(this.todo.val()));
-  //   });
-  // }
+  @action
+  async removeMovie(movie: MovieType) {
+    this.cart.setLoading(true);
+    const data = this.cart.val()?.filter((data) => data.id !== movie.id);
+    runInAction("removeMovie", () => {
+      this.cart.set(data);
+      localStorage.setItem("cart", JSON.stringify(this.cart.val()));
+    });
+  }
 
   @action
   async setPrice(movie: MovieType, price: number) {
@@ -75,6 +73,30 @@ export class CartStore {
       runInAction("clearCarterror", () => {
         this.cart.setLoading(false);
       });
+    }
+  }
+  @computed
+  get totalPrice(): number {
+    const data = this.cart.val();
+    if (!data) return 0;
+    return data
+      .map((item: MovieType) => item.price)
+      .reduce((prev, next) => prev + next, 0);
+  }
+  @computed
+  get discountPrice(): number {
+    const data = this.cart.val();
+    if (!data) return 0;
+    if (data.length >= 5) {
+      return data
+        .map((item: MovieType) => item.price * 0.2)
+        .reduce((prev, next) => prev + next, 0);
+    } else if (data.length >= 3) {
+      return data
+        .map((item: MovieType) => item.price * 0.1)
+        .reduce((prev, next) => prev + next, 0);
+    } else {
+      return 0;
     }
   }
   @computed

@@ -36,7 +36,7 @@ const TableCart: React.FC<TableCartProps> = ({ carts }) => {
       <TableContainer>
         <Grid container justify="flex-end">
           <Button variant="contained" color="secondary" onClick={handleClear}>
-            CLEAR CART
+            CLEAR
           </Button>
         </Grid>
 

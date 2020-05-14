@@ -8,7 +8,6 @@ import {
   createStyles,
   Box,
   Typography,
-  Button,
   Grid,
 } from "@material-ui/core";
 import { useStores } from "../stores";
@@ -42,8 +41,32 @@ const CartPage = () => {
           </Box>
           <CartTable carts={carts} />
           <Box pt={3}>
-            <Grid container justify="flex-end">
-              <Typography variant="h4" align="center">
+            <Grid container direction="column" alignItems="flex-end">
+              <Typography variant="h6" align="center">
+                <NumberFormat
+                  displayType={"text"}
+                  hidden={cartStore.discountPrice === 0}
+                  decimalScale={2}
+                  prefix="Price "
+                  suffix=" Baht"
+                  fixedDecimalScale={true}
+                  thousandSeparator
+                  value={cartStore.totalPrice}
+                />
+              </Typography>
+              <Typography variant="h6" color="secondary" align="center">
+                <NumberFormat
+                  hidden={cartStore.discountPrice === 0}
+                  displayType={"text"}
+                  decimalScale={2}
+                  prefix="Discount "
+                  suffix=" Baht"
+                  fixedDecimalScale={true}
+                  thousandSeparator
+                  value={cartStore.discountPrice}
+                />
+              </Typography>
+              <Typography variant="h6" align="center">
                 <NumberFormat
                   displayType={"text"}
                   decimalScale={2}

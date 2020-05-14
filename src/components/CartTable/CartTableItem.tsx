@@ -1,29 +1,20 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import { useStores } from "../../stores";
 import { observer } from "mobx-react-lite";
 import Form, { TextField } from "../Form";
 import { useForm } from "react-hook-form";
-import { IconButton, Paper } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import NumberFormat from "react-number-format";
-const useStyles = makeStyles({
-  table: {
-    width: "100%",
-  },
-  paper: {
-    padding: "24px 12px",
-  },
-});
+import { MovieType } from "../../types/MovieType";
 
 type TableCartItemProps = {
-  cart: any;
+  cart: MovieType;
 };
 
 const TableCartItem: React.FC<TableCartItemProps> = ({ cart }) => {
-  const classes = useStyles();
   const { cartStore } = useStores();
   const form = useForm();
 
@@ -31,7 +22,7 @@ const TableCartItem: React.FC<TableCartItemProps> = ({ cart }) => {
     await cartStore.setPrice(cart, data.price);
     e?.preventDefault();
   });
-
+  const handleRemoveMovie = () => cartStore.removeMovie(cart);
   return (
     <TableRow key={cart.title}>
       <TableCell>
@@ -58,7 +49,7 @@ const TableCartItem: React.FC<TableCartItemProps> = ({ cart }) => {
       </TableCell>
       <TableCell align="left">{cart.vote_average}</TableCell>
       <TableCell align="left">
-        <IconButton>
+        <IconButton onClick={handleRemoveMovie}>
           <DeleteIcon color="secondary" />
         </IconButton>
       </TableCell>

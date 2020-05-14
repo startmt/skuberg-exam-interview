@@ -12,16 +12,12 @@ import {
   Badge,
   Link,
 } from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { useStores } from "../../stores";
 import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
     title: {
       flexGrow: 1,
     },
@@ -75,15 +71,6 @@ const Appbar = () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <IconButton
-          edge="start"
-          className={classes.menuButton}
-          color="inherit"
-          aria-label="menu"
-        >
-          <MenuIcon />
-        </IconButton>
-
         <Typography variant="h6" className={classes.title}>
           <Link color="inherit" href="/movie">
             MoviePage

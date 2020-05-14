@@ -5,7 +5,13 @@ import TodoPage from "./pages/TodoPage";
 import MoviePage from "./pages/MoviePage";
 import CartPage from "./pages/CartPage";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core";
+import { blue, red } from "@material-ui/core/colors";
+import HomePage from "./pages/HomePage";
 const theme = createMuiTheme({
+  palette: {
+    primary: blue,
+    secondary: red,
+  },
   typography: {
     fontFamily: [
       "Bai Jamjuree",
@@ -80,6 +86,7 @@ const App: React.FC = () => {
     <ThemeProvider theme={theme}>
       <Router history={history}>
         <Switch>
+          <Route exact path="/" component={HomePage} />
           <Route exact path="/todo" component={TodoPage} />
           <Route exact path="/movie" component={MoviePage} />
           <Route exact path="/movie/cart" component={CartPage} />
